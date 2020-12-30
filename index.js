@@ -54,6 +54,13 @@ app.post("/newuser",(req,res)=>{
         password:req.body.password,
         email:req.body.email
     })
-    user.save().then((result)=>res.json({message:result})).catch((err)=>res.status(400).json({message:err}));
+    User.find({email:req.body.email,password:req.body.password},(err,result)=>{
+        if(err || result.length===0){
+            user.save().then((result)=>res.json({message:result})).catch((err)=>res.status(400).json({message:err}));
+            return;
+        }
+        res.status(400).json({message:"email id already exists"});
+    })
+    
 })
 app.listen(port);
