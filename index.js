@@ -36,7 +36,9 @@ const schema=new mongoose.Schema({
 
 const User=mongoose.model("User",schema);
 
-
+app.get("/",(req,res)=>{
+    res.send("hello");
+})
 app.post("/user",(req,res)=>{
     User.find({email:req.body.email,password:req.body.password},(err,result)=>{
         if(err || result.length===0){
